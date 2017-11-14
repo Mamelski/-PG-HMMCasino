@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="700">
+        Title="MainWindow" Height="500" Width="633">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="250"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Height="Auto"  VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid>
                 <Grid.RowDefinitions>
@@ -28,15 +28,27 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Margin="5" x:Name="Kasyno" Content="Kasyno" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                <Label Grid.Row="1" Grid.Column="0" Margin="5" Content="Liczba ścian na kostce:"/>
-                <Label Grid.Row="2" Grid.Column="0" Margin="5" Content="Szansa przejścia na uczciwą kostkę:"/>
-                <Label Grid.Row="3" Grid.Column="0" Margin="5" Content="Szansa przejścia na nieuczciwą kostkę:"/>
-                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" Margin="5" Name="numberOfSides" Value="6" Increment="1" />
-                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Margin="5" Name="ChanceToSwitchToFair" Minimum="0" Maximum="1" Value="0.2" Increment="0.1"/>
-                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="1" Margin="5" Name="ChangeToSwitchToUnfair" Minimum="0" Maximum="1" Value="0.2" Increment="0.1"/>
+                <Label Grid.Row="1" Grid.Column="0" Margin="5" Content="Szansa przejścia na uczciwą kostkę:"/>
+                <Label Grid.Row="2" Grid.Column="0" Margin="5" Content="Szansa przejścia na nieuczciwą kostkę:"/>
+                <Label Grid.Row="3" Grid.Column="0" Margin="5" Content="Liczba rzutów"/>
+                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="1" Margin="5" Name="ChanceToSwitchToFair" Minimum="0" Maximum="1" Value="0.2" Increment="0.1"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Margin="5" Name="ChangeToSwitchToUnfair" Minimum="0" Maximum="1" Value="0.2" Increment="0.1"/>
+                <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Margin="5" Name="NumberOfRolls" Minimum="0" Maximum="200" Value="50" Increment="1"/>
             </Grid>
-            <DataGrid x:Name="dataGrid" ItemsSource="{Binding DiceSide}" Grid.Column="1" Margin="5"/>
+            <StackPanel Grid.Column="1" Width="Auto">
+                <Label Content="Szanse na wypadnięcie poszczególnych ścian:"/>
+                <DataGrid x:Name="dataGrid" Margin="5" AutoGenerateColumns="False"  ScrollViewer.CanContentScroll="True" MaxHeight="200"
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Szansa na wypadnięcie" Binding="{Binding Path=Chance}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            </StackPanel>
         </Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="54,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        
+        <Button Grid.Row="1" x:Name="startSimulation" Content="Zasymuluj" Margin="5" Width="75" Height="50" Click="StartSimulation"/>
+        <Button x:Name="RunAlgorithms" Content="Button" HorizontalAlignment="Left" Margin="92,56,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="RunAlgorithms_Click"/>
+
     </Grid>
 </Window>
